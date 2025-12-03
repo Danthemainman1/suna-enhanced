@@ -8,6 +8,21 @@ import { HeroSection as NewHeroSection } from '@/components/home/hero-section';
 const ShowCaseSection = lazy(() => 
   import('@/components/home/showcase-section').then(mod => ({ default: mod.ShowCaseSection }))
 );
+const FeatureComparisonSection = lazy(() =>
+  import('@/components/home/feature-comparison-section').then(mod => ({ default: mod.FeatureComparisonSection }))
+);
+const DemoVideoSection = lazy(() =>
+  import('@/components/home/demo-video-section').then(mod => ({ default: mod.DemoVideoSection }))
+);
+const PricingSection = lazy(() =>
+  import('@/components/home/pricing-section').then(mod => ({ default: mod.PricingSection }))
+);
+const TestimonialsSection = lazy(() =>
+  import('@/components/home/testimonials-section').then(mod => ({ default: mod.TestimonialsSection }))
+);
+const CTASection = lazy(() =>
+  import('@/components/home/cta-section').then(mod => ({ default: mod.CTASection }))
+);
 const WordmarkFooter = lazy(() => 
   import('@/components/home/wordmark-footer').then(mod => ({ default: mod.WordmarkFooter }))
 );
@@ -42,6 +57,26 @@ export default function Home() {
           {/* Below-the-fold content - lazy loaded with Suspense */}
           <Suspense fallback={<ShowCaseSkeleton />}>
             <ShowCaseSection />
+          </Suspense>
+          
+          <Suspense fallback={null}>
+            <DemoVideoSection />
+          </Suspense>
+          
+          <Suspense fallback={null}>
+            <FeatureComparisonSection />
+          </Suspense>
+          
+          <Suspense fallback={null}>
+            <PricingSection />
+          </Suspense>
+          
+          <Suspense fallback={null}>
+            <TestimonialsSection />
+          </Suspense>
+          
+          <Suspense fallback={null}>
+            <CTASection />
           </Suspense>
           
           <Suspense fallback={null}>

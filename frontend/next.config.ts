@@ -1,10 +1,18 @@
 import type { NextConfig } from 'next';
 
 const nextConfig = (): NextConfig => ({
-  output: (process.env.NEXT_OUTPUT as 'standalone') || undefined,
+  // For GitHub Pages static export
+  output: process.env.GITHUB_PAGES === 'true' ? 'export' : ((process.env.NEXT_OUTPUT as 'standalone') || undefined),
+  
+  // GitHub Pages base path (repository name)
+  basePath: process.env.GITHUB_PAGES === 'true' ? '/suna-enhanced' : '',
+  assetPrefix: process.env.GITHUB_PAGES === 'true' ? '/suna-enhanced/' : '',
+  
+  // For static export, disable features that require server
+  trailingSlash: process.env.GITHUB_PAGES === 'true' ? true : undefined,
   
   // Performance optimizations
-  experimental: {
+  experimental: process.env.GITHUB_PAGES === 'true' ? undefined : {
     // Optimize package imports for faster builds and smaller bundles
     optimizePackageImports: [
       'lucide-react',
@@ -22,12 +30,15 @@ const nextConfig = (): NextConfig => ({
   
   // Optimize images
   images: {
+    unoptimized: process.env.GITHUB_PAGES === 'true' ? true : false,
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
   
+  // Rewrites and headers don't work with static export
   async rewrites() {
+    if (process.env.GITHUB_PAGES === 'true') return [];
     return [
       {
         source: '/ingest/static/:path*',
@@ -46,6 +57,7 @@ const nextConfig = (): NextConfig => ({
   
   // HTTP headers for caching and performance
   async headers() {
+    if (process.env.GITHUB_PAGES === 'true') return [];
     return [
       {
         source: '/fonts/:path*',
