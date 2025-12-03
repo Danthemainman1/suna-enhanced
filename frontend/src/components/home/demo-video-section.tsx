@@ -55,11 +55,12 @@ export function DemoVideoSection() {
             ) : (
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1"
                 title="Suna Ultra Demo"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
+              {/* TODO: Replace YOUR_VIDEO_ID with actual Suna Ultra demo video ID */}
             )}
 
             {/* Placeholder background - Replace with actual demo screenshot */}

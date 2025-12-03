@@ -135,12 +135,17 @@ export function WorkflowBuilder() {
   ]);
 
   const addNode = (type: WorkflowNode['type']) => {
+    // Grid-based positioning to avoid overlaps
+    const gridSize = 200;
+    const column = nodes.length % 3;
+    const row = Math.floor(nodes.length / 3);
+    
     const newNode: WorkflowNode = {
       id: `${Date.now()}`,
       type,
       label: `New ${type}`,
-      x: Math.random() * 300 + 50,
-      y: Math.random() * 300 + 50,
+      x: 50 + (column * gridSize),
+      y: 50 + (row * gridSize),
     };
     setNodes([...nodes, newNode]);
   };

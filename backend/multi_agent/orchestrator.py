@@ -294,8 +294,9 @@ class AgentOrchestrator:
         task.started_at = datetime.utcnow()
 
         try:
-            # Simulate task execution
-            # In a real implementation, this would call the actual agent
+            # TODO: Replace with actual agent implementation call
+            # Example: result = await agent.execute(task)
+            # For now, simulate task execution
             await asyncio.sleep(1.0)
 
             # Task completed successfully

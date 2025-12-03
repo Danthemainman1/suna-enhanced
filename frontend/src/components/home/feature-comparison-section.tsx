@@ -196,7 +196,7 @@ export function FeatureComparisonSection() {
           className="text-center mt-8"
         >
           <p className="text-sm text-muted-foreground">
-            * Feature comparison based on publicly available information as of December 2025
+            * Feature comparison based on publicly available information as of December 2024
           </p>
         </motion.div>
       </div>
