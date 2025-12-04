@@ -227,9 +227,16 @@ class HybridRouter(LLMProvider):
             # Estimate cost savings if used local
             if provider == self.local_provider and self.cloud_provider:
                 cloud_info = await self.cloud_provider.get_model_info()
-                if cloud_info.cost_per_1k_input_tokens:
-                    tokens = response.usage.get("total_tokens", 0) if response.usage else 0
-                    saved = (tokens / 1000) * cloud_info.cost_per_1k_input_tokens
+                if cloud_info.cost_per_1k_input_tokens and response.usage:
+                    input_tokens = response.usage.get("prompt_tokens", 0)
+                    output_tokens = response.usage.get("completion_tokens", 0)
+                    
+                    input_cost = (input_tokens / 1000) * cloud_info.cost_per_1k_input_tokens
+                    output_cost = 0
+                    if cloud_info.cost_per_1k_output_tokens:
+                        output_cost = (output_tokens / 1000) * cloud_info.cost_per_1k_output_tokens
+                    
+                    saved = input_cost + output_cost
                     self.stats["cost_saved"] += saved
             
             return response

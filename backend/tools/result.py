@@ -11,7 +11,12 @@ from pydantic import BaseModel, Field, ConfigDict
 
 
 def _utcnow():
-    """Get current UTC datetime."""
+    """
+    Get current UTC datetime.
+    
+    This is a timezone-aware alternative to datetime.utcnow(),
+    which is deprecated in Python 3.12+.
+    """
     return datetime.now(timezone.utc)
 
 
