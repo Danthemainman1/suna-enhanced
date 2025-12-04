@@ -146,7 +146,7 @@ def tool_registry():
 
 
 @pytest.fixture
-async def sample_tool():
+def sample_tool():
     """Sample tool implementation for testing."""
     from tools.base import Tool
     from tools.result import ToolResult
@@ -186,7 +186,7 @@ def setup_test_env(monkeypatch):
 
 # Cleanup
 @pytest.fixture(autouse=True)
-async def cleanup_after_test():
+def cleanup_after_test():
     """Cleanup after each test."""
     yield
     # Perform any necessary cleanup

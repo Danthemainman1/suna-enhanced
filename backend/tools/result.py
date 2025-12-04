@@ -6,8 +6,13 @@ must return, ensuring consistent handling of tool execution results.
 """
 
 from typing import Any, Optional, Dict, List
-from datetime import datetime
-from pydantic import BaseModel, Field
+from datetime import datetime, timezone
+from pydantic import BaseModel, Field, ConfigDict
+
+
+def _utcnow():
+    """Get current UTC datetime."""
+    return datetime.now(timezone.utc)
 
 
 class ToolResult(BaseModel):
@@ -18,24 +23,24 @@ class ToolResult(BaseModel):
     handling of success, errors, and metadata across the platform.
     """
     
+    model_config = ConfigDict(
+        json_encoders={
+            datetime: lambda v: v.isoformat()
+        }
+    )
+    
     success: bool = Field(..., description="Whether the tool executed successfully")
     output: Any = Field(None, description="Primary output data from the tool")
     error: Optional[str] = Field(None, description="Error message if execution failed")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata about execution")
     artifacts: List[Dict[str, Any]] = Field(default_factory=list, description="Files or data artifacts produced")
     execution_time: Optional[float] = Field(None, description="Execution time in seconds")
-    timestamp: datetime = Field(default_factory=datetime.utcnow, description="When the result was created")
+    timestamp: datetime = Field(default_factory=_utcnow, description="When the result was created")
     
     # Additional context fields
     tool_name: Optional[str] = Field(None, description="Name of the tool that produced this result")
     tool_version: Optional[str] = Field(None, description="Version of the tool")
     warnings: List[str] = Field(default_factory=list, description="Non-fatal warnings during execution")
-    
-    class Config:
-        """Pydantic configuration."""
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
     
     @classmethod
     def success_result(

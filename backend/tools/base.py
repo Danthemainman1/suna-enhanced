@@ -7,7 +7,7 @@ ensuring consistent behavior and interface across the tool ecosystem.
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 import time
 import logging
 
@@ -20,20 +20,20 @@ logger = logging.getLogger(__name__)
 class ToolParameter(BaseModel):
     """Definition of a tool parameter."""
     
+    model_config = ConfigDict(extra="allow")
+    
     name: str = Field(..., description="Parameter name")
     type: str = Field(..., description="Parameter type (string, int, bool, etc.)")
     description: str = Field(..., description="Description of the parameter")
     required: bool = Field(True, description="Whether the parameter is required")
     default: Optional[Any] = Field(None, description="Default value if not provided")
     enum: Optional[List[Any]] = Field(None, description="Allowed values (if constrained)")
-    
-    class Config:
-        """Pydantic configuration."""
-        extra = "allow"
 
 
 class ToolMetadata(BaseModel):
     """Metadata about a tool."""
+    
+    model_config = ConfigDict(extra="allow")
     
     name: str = Field(..., description="Tool name")
     description: str = Field(..., description="Tool description")
@@ -45,10 +45,6 @@ class ToolMetadata(BaseModel):
     parameters: List[ToolParameter] = Field(default_factory=list, description="Tool parameters")
     requires_auth: bool = Field(False, description="Whether tool requires authentication")
     is_async: bool = Field(True, description="Whether tool supports async execution")
-    
-    class Config:
-        """Pydantic configuration."""
-        extra = "allow"
 
 
 class Tool(ABC):
