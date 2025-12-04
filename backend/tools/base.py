@@ -8,6 +8,7 @@ ensuring consistent behavior and interface across the tool ecosystem.
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, List
 from pydantic import BaseModel, Field, ConfigDict
+from enum import Enum
 import time
 import logging
 
@@ -15,6 +16,21 @@ from .result import ToolResult
 
 
 logger = logging.getLogger(__name__)
+
+
+class ToolCategory(str, Enum):
+    """Categories for organizing tools."""
+    
+    COMMUNICATION = "communication"
+    PRODUCTIVITY = "productivity"
+    DEVELOPMENT = "development"
+    DATA = "data"
+    AI_ML = "ai_ml"
+    BROWSER = "browser"
+    FINANCE = "finance"
+    STORAGE = "storage"
+    SEARCH = "search"
+    UTILITIES = "utilities"
 
 
 class ToolParameter(BaseModel):

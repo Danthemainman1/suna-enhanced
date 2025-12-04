@@ -8,6 +8,10 @@ enabling discovery, filtering, and version management.
 from typing import Dict, List, Optional, Type, Set
 import logging
 from collections import defaultdict
+import importlib
+import pkgutil
+import inspect
+from pathlib import Path
 
 from .base import Tool, ToolMetadata
 
@@ -394,6 +398,84 @@ class ToolRegistry:
     def __repr__(self) -> str:
         """Detailed string representation."""
         return f"ToolRegistry(tools={list(self._tools.keys())})"
+    
+    def auto_discover_tools(
+        self,
+        base_package: str = "tools",
+        recursive: bool = True
+    ) -> int:
+        """
+        Automatically discover and register all tools in a package.
+        
+        This method scans the specified package and its subpackages for Tool classes
+        and automatically registers them.
+        
+        Args:
+            base_package: Base package to scan (default: "tools")
+            recursive: Whether to scan subpackages recursively
+            
+        Returns:
+            Number of tools discovered and registered
+        """
+        count = 0
+        
+        try:
+            # Import the base package
+            base_module = importlib.import_module(base_package)
+            base_path = Path(base_module.__file__).parent
+            
+            # Get all submodules
+            if recursive:
+                for importer, modname, ispkg in pkgutil.walk_packages(
+                    [str(base_path)],
+                    prefix=f"{base_package}."
+                ):
+                    try:
+                        module = importlib.import_module(modname)
+                        count += self._register_tools_from_module(module)
+                    except Exception as e:
+                        logger.warning(f"Failed to import module {modname}: {e}")
+            else:
+                count += self._register_tools_from_module(base_module)
+            
+            logger.info(f"Auto-discovered {count} tools from {base_package}")
+            return count
+            
+        except Exception as e:
+            logger.error(f"Failed to auto-discover tools: {e}")
+            return 0
+    
+    def _register_tools_from_module(self, module) -> int:
+        """
+        Register all Tool classes found in a module.
+        
+        Args:
+            module: Python module to scan
+            
+        Returns:
+            Number of tools registered from this module
+        """
+        count = 0
+        
+        for name, obj in inspect.getmembers(module):
+            # Check if it's a class and subclass of Tool (but not Tool itself)
+            if (inspect.isclass(obj) and 
+                issubclass(obj, Tool) and 
+                obj is not Tool and
+                not inspect.isabstract(obj)):
+                
+                try:
+                    # Try to instantiate with no config (some tools may fail)
+                    # This is okay - they'll need to be registered manually with config
+                    tool_instance = obj()
+                    if self.register(tool_instance):
+                        count += 1
+                        logger.debug(f"Registered tool: {tool_instance.name}")
+                except Exception as e:
+                    # Tool requires configuration - skip auto-registration
+                    logger.debug(f"Skipped tool {name} (requires config): {e}")
+        
+        return count
 
 
 # Global tool registry instance
