@@ -333,16 +333,9 @@ api_router.include_router(referrals_router)
 from scheduler import api as scheduler_api
 api_router.include_router(scheduler_api.router)
 
-# Include proactive agent system router
-from proactive import api as proactive_api
-api_router.include_router(proactive_api.router)
-# Include debugger router
-from debugger import api as debugger_api
-api_router.include_router(debugger_api.router)
-
-# Include collaboration router
-from multi_agent import collaboration_api
-api_router.include_router(collaboration_api.router)
+# Include enterprise router
+from enterprise import api as enterprise_api
+api_router.include_router(enterprise_api.router)
 
 @api_router.get("/health", summary="Health Check", operation_id="health_check", tags=["system"])
 async def health_check():
