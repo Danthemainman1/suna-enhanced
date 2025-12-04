@@ -103,7 +103,7 @@ class DebateMode(CollaborationModeBase):
             metadata={
                 "rounds": debate_config.rounds,
                 "total_arguments": len(arguments),
-                "debate_result": debate_result.dict()
+                "debate_result": debate_result.model_dump()
             }
         )
     
