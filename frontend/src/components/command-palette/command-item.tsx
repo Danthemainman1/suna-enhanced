@@ -1,4 +1,4 @@
-"use client";
+use client;
 
 import { Command as CommandPrimitive } from "cmdk";
 import * as LucideIcons from "lucide-react";
@@ -23,7 +23,7 @@ export function CommandItem({ command, onSelect }: CommandItemProps) {
       className="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
     >
       {IconComponent && (
-        <IconComponent className="mr-2 h-4 w-4" aria-hidden="true" />
+        <IconComponent className="mr-2 h-4 w-4" aria-hidden={true} />
       )}
       <div className="flex-1">
         <div className="font-medium">{command.label}</div>
