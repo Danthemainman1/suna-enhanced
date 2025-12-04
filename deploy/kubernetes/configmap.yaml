@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: suna-config
+  namespace: suna-ultra
+data:
+  ENVIRONMENT: "production"
+  ENV_MODE: "production"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  REDIS_SSL: "False"
+  DATABASE_URL: "postgresql://suna:PLACEHOLDER@postgres-service:5432/suna_ultra"
