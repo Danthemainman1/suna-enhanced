@@ -12,9 +12,20 @@ Key Features:
 - Async/await for all tool operations
 """
 
-from .base import Tool, BaseTool, ToolParameter, ToolMetadata
+from .base import Tool, BaseTool, ToolParameter, ToolMetadata, ToolCategory
 from .result import ToolResult
 from .registry import ToolRegistry, get_registry, reset_registry
+from .exceptions import (
+    ToolException,
+    ToolExecutionError,
+    ToolValidationError,
+    ToolAuthenticationError,
+    ToolConfigurationError,
+    ToolTimeoutError,
+    ToolRateLimitError,
+    ToolNotFoundError,
+    ToolRegistrationError,
+)
 
 
 __all__ = [
@@ -23,6 +34,7 @@ __all__ = [
     "BaseTool",
     "ToolParameter",
     "ToolMetadata",
+    "ToolCategory",
     
     # Result
     "ToolResult",
@@ -31,6 +43,17 @@ __all__ = [
     "ToolRegistry",
     "get_registry",
     "reset_registry",
+    
+    # Exceptions
+    "ToolException",
+    "ToolExecutionError",
+    "ToolValidationError",
+    "ToolAuthenticationError",
+    "ToolConfigurationError",
+    "ToolTimeoutError",
+    "ToolRateLimitError",
+    "ToolNotFoundError",
+    "ToolRegistrationError",
 ]
 
 
