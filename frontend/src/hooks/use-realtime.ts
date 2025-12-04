@@ -11,6 +11,7 @@ export interface WebSocketMessage<T = any> {
 export interface UseWebSocketOptions {
   reconnectInterval?: number;
   maxReconnectAttempts?: number;
+  maxMessages?: number;
   onOpen?: () => void;
   onClose?: () => void;
   onError?: (error: Event) => void;
@@ -31,6 +32,7 @@ export function useWebSocket<T = any>(
   const {
     reconnectInterval = 3000,
     maxReconnectAttempts = 5,
+    maxMessages = 1000,
     onOpen,
     onClose,
     onError,
@@ -65,7 +67,14 @@ export function useWebSocket<T = any>(
       ws.onmessage = (event) => {
         try {
           const message: WebSocketMessage<T> = JSON.parse(event.data);
-          setMessages((prev) => [...prev, message]);
+          setMessages((prev) => {
+            const newMessages = [...prev, message];
+            // Limit message history to prevent memory issues
+            if (newMessages.length > maxMessages) {
+              return newMessages.slice(newMessages.length - maxMessages);
+            }
+            return newMessages;
+          });
           setLastMessage(message);
         } catch (error) {
           console.error("Failed to parse WebSocket message:", error);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useWebSocket } from "@/hooks/use-realtime";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
@@ -93,10 +93,20 @@ export function ActivityFeed({ workspaceId }: ActivityFeedProps) {
     }
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  const allActivities = [
-    ...realtimeActivities,
-    ...(data?.pages.flatMap((page) => page.activities) || []),
-  ];
+  const allActivities = useMemo(() => {
+    const paginatedActivities = data?.pages.flatMap((page) => page.activities) || [];
+    const combined = [...realtimeActivities, ...paginatedActivities];
+    
+    // Deduplicate activities by id
+    const seen = new Set<string>();
+    return combined.filter((activity) => {
+      if (seen.has(activity.id)) {
+        return false;
+      }
+      seen.add(activity.id);
+      return true;
+    });
+  }, [realtimeActivities, data]);
 
   const getActivityIcon = (type: string) => {
     switch (type) {

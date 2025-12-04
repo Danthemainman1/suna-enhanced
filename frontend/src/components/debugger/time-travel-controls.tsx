@@ -82,21 +82,27 @@ export function TimeTravelControls({ taskId }: TimeTravelControlsProps) {
     // Check for added/modified keys
     for (const key in currentState) {
       if (!(key in previousState)) {
-        changes.push(`+ ${key}: ${JSON.stringify(currentState[key])}`);
-      } else if (
-        JSON.stringify(currentState[key]) !==
-        JSON.stringify(previousState[key])
-      ) {
-        changes.push(
-          `~ ${key}: ${JSON.stringify(previousState[key])} → ${JSON.stringify(currentState[key])}`
-        );
+        const value = String(currentState[key]);
+        changes.push(`+ ${key}: ${value.length > 100 ? value.substring(0, 100) + "..." : value}`);
+      } else {
+        // Simple string comparison for primitives, indicate change for objects
+        const currentValue = currentState[key];
+        const previousValue = previousState[key];
+        
+        if (typeof currentValue === "object" || typeof previousValue === "object") {
+          // For objects, just indicate they changed
+          changes.push(`~ ${key}: [Object changed]`);
+        } else if (currentValue !== previousValue) {
+          changes.push(`~ ${key}: ${previousValue} → ${currentValue}`);
+        }
       }
     }
 
     // Check for deleted keys
     for (const key in previousState) {
       if (!(key in currentState)) {
-        changes.push(`- ${key}: ${JSON.stringify(previousState[key])}`);
+        const value = String(previousState[key]);
+        changes.push(`- ${key}: ${value.length > 100 ? value.substring(0, 100) + "..." : value}`);
       }
     }
 

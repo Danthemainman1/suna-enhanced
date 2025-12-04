@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AnalyticsCharts } from "@/components/dashboard/analytics-charts";
 import { useAnalytics } from "@/hooks/use-analytics";
-import { DatePickerWithRange } from "@/components/ui/date-range-picker";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { DateRange } from "react-day-picker";
 import { addDays } from "date-fns";
 
 export default function AnalyticsPage() {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: addDays(new Date(), -30),
     to: new Date(),
   });
@@ -62,9 +62,10 @@ export default function AnalyticsPage() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <DatePickerWithRange
-              date={dateRange}
-              onDateChange={setDateRange}
+            <DateRangePicker
+              initialDateFrom={dateRange.from}
+              initialDateTo={dateRange.to}
+              onUpdate={(values) => setDateRange(values.range)}
             />
             <Button variant="outline" onClick={handleExport} disabled={!data}>
               <Download className="w-4 h-4 mr-2" />

@@ -40,6 +40,10 @@ const PresenceDebug = lazy(() =>
   import('@/components/debug/presence-debug').then(mod => ({ default: mod.PresenceDebug }))
 );
 
+const CommandPalette = lazy(() => 
+  import('@/components/command-palette/command-palette').then(mod => ({ default: mod.CommandPalette }))
+);
+
 // Skeleton shell that renders immediately for FCP
 function DashboardSkeleton() {
   return (
@@ -175,6 +179,9 @@ export default function DashboardLayoutContent({
         </Suspense>
         <Suspense fallback={null}>
           <PresentationViewerWrapper />
+        </Suspense>
+        <Suspense fallback={null}>
+          <CommandPalette />
         </Suspense>
       </div>
     </AppProviders>
