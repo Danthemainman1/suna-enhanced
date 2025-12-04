@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suna-worker
+  namespace: suna-ultra
+  labels:
+    app: suna-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: suna-worker
+  template:
+    metadata:
+      labels:
+        app: suna-worker
+    spec:
+      containers:
+      - name: worker
+        image: suna-ultra/backend:latest
+        imagePullPolicy: Always
+        command: ["uv", "run", "dramatiq", "--skip-logging", "--processes", "2", "--threads", "4", "run_agent_background"]
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://suna:$(DB_PASSWORD)@postgres-service:5432/suna_ultra"
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
+        envFrom:
+        - configMapRef:
+            name: suna-config
+        - secretRef:
+            name: suna-secrets
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
