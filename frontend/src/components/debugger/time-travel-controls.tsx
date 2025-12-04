@@ -89,7 +89,12 @@ export function TimeTravelControls({ taskId }: TimeTravelControlsProps) {
         const currentValue = currentState[key];
         const previousValue = previousState[key];
         
-        if (typeof currentValue === "object" || typeof previousValue === "object") {
+        // Handle null explicitly
+        if (currentValue === null || previousValue === null) {
+          if (currentValue !== previousValue) {
+            changes.push(`~ ${key}: ${previousValue} → ${currentValue}`);
+          }
+        } else if (typeof currentValue === "object" || typeof previousValue === "object") {
           // For objects, just indicate they changed
           changes.push(`~ ${key}: [Object changed]`);
         } else if (currentValue !== previousValue) {

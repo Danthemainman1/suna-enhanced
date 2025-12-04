@@ -25,11 +25,20 @@ export default function AnalyticsPage() {
     endDate: dateRange?.to || new Date(),
   });
 
+  const escapeCSV = (value: string | number): string => {
+    const str = String(value);
+    // If value contains comma, newline, or quote, wrap in quotes and escape quotes
+    if (str.includes(",") || str.includes("\n") || str.includes('"')) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  };
+
   const handleExport = () => {
     // Export analytics data as CSV
     if (!data) return;
 
-    const csv = [
+    const rows = [
       ["Metric", "Value"],
       ["Total Tasks", data.tasks.total],
       ["Completed Tasks", data.tasks.completed],
@@ -39,8 +48,10 @@ export default function AnalyticsPage() {
       ["Average Duration", `${data.averageDuration.duration}s`],
       ["Total Token Usage", data.tokenUsage.total],
       ["Total Cost", `$${data.costEstimation.total}`],
-    ]
-      .map((row) => row.join(","))
+    ];
+
+    const csv = rows
+      .map((row) => row.map((cell) => escapeCSV(cell)).join(","))
       .join("\n");
 
     const blob = new Blob([csv], { type: "text/csv" });

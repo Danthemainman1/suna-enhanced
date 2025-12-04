@@ -9,9 +9,11 @@ interface CommandItemProps {
   onSelect: () => void;
 }
 
+type LucideIconName = keyof typeof LucideIcons;
+
 export function CommandItem({ command, onSelect }: CommandItemProps) {
-  const IconComponent = command.icon
-    ? (LucideIcons as any)[command.icon]
+  const IconComponent = command.icon && command.icon in LucideIcons
+    ? LucideIcons[command.icon as LucideIconName] as React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
     : null;
 
   return (

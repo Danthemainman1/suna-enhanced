@@ -113,7 +113,7 @@ export function StateInspector({ sessionId, currentStep }: StateInspectorProps) 
           {isExpanded && (
             <div className="ml-4 border-l-2 border-muted pl-2 mt-1">
               {value.map((item, index) => (
-                <div key={index} className="mb-1">
+                <div key={`${key}-${index}-${JSON.stringify(item).substring(0, 20)}`} className="mb-1">
                   <span className="text-muted-foreground">[{index}]: </span>
                   {renderValue(item, `${key}.${index}`, depth + 1)}
                 </div>
