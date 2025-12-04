@@ -14,6 +14,26 @@ from .communication_bus import CommunicationBus
 from .consensus_engine import ConsensusEngine
 from .load_balancer import LoadBalancer
 
+# Collaboration modes
+from .collaboration_modes import CollaborationModeBase
+from .debate import DebateMode
+from .ensemble import EnsembleMode
+from .pipeline import PipelineMode
+from .swarm import SwarmMode
+from .critique import CritiqueMode
+
+# Models
+from .models import (
+    CollaborationResult,
+    CollaborationTask,
+    CollaborationAgent,
+    DebateConfig,
+    EnsembleConfig,
+    PipelineConfig,
+    SwarmConfig,
+    CritiqueConfig,
+)
+
 __all__ = [
     'AgentOrchestrator',
     'AgentRegistry',
@@ -22,4 +42,18 @@ __all__ = [
     'CommunicationBus',
     'ConsensusEngine',
     'LoadBalancer',
+    'CollaborationModeBase',
+    'DebateMode',
+    'EnsembleMode',
+    'PipelineMode',
+    'SwarmMode',
+    'CritiqueMode',
+    'CollaborationResult',
+    'CollaborationTask',
+    'CollaborationAgent',
+    'DebateConfig',
+    'EnsembleConfig',
+    'PipelineConfig',
+    'SwarmConfig',
+    'CritiqueConfig',
 ]
