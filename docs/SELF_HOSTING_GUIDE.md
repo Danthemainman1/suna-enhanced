@@ -519,7 +519,7 @@ Suna Ultra can run on Raspberry Pi 4 (8GB):
 ```bash
 # Update system
 sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get upgrade -y
 
 # Install Docker
 curl -fsSL https://get.docker.com -o get-docker.sh

@@ -9,4 +9,9 @@ data:
   REDIS_HOST: "redis-service"
   REDIS_PORT: "6379"
   REDIS_SSL: "False"
-  DATABASE_URL: "postgresql://suna:PLACEHOLDER@postgres-service:5432/suna_ultra"
+  # Note: DATABASE_URL should be constructed from environment variables in the application
+  # or use the DB_PASSWORD from secrets. This is a template that applications should override.
+  POSTGRES_HOST: "postgres-service"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "suna_ultra"
+  POSTGRES_USER: "suna"

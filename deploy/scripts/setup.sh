@@ -26,13 +26,13 @@ if [ ! -f .env ]; then
     SECRET_KEY=$(openssl rand -hex 32)
     DB_PASSWORD=$(openssl rand -hex 16)
     
-    # Use sed that works on both Linux and macOS
+    # Use sed that works on both Linux and macOS with proper escaping
     if [ "$(uname)" = "Darwin" ]; then
-        sed -i '' "s/generate-with-openssl-rand-hex-32/$SECRET_KEY/" .env
-        sed -i '' "s/generate-secure-password/$DB_PASSWORD/" .env
+        sed -i '' "s|generate-with-openssl-rand-hex-32|$SECRET_KEY|" .env
+        sed -i '' "s|generate-secure-password|$DB_PASSWORD|" .env
     else
-        sed -i "s/generate-with-openssl-rand-hex-32/$SECRET_KEY/" .env
-        sed -i "s/generate-secure-password/$DB_PASSWORD/" .env
+        sed -i "s|generate-with-openssl-rand-hex-32|$SECRET_KEY|" .env
+        sed -i "s|generate-secure-password|$DB_PASSWORD|" .env
     fi
     
     echo ""

@@ -20,6 +20,11 @@ spec:
         image: suna-ultra/backend:latest
         imagePullPolicy: Always
         command: ["uv", "run", "dramatiq", "--skip-logging", "--processes", "2", "--threads", "4", "run_agent_background"]
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://suna:$(DB_PASSWORD)@postgres-service:5432/suna_ultra"
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
         envFrom:
         - configMapRef:
             name: suna-config

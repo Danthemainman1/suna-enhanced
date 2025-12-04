@@ -36,7 +36,7 @@ sleep 3
 
 REDIS_CONTAINER=$($COMPOSE_CMD -f docker-compose.prod.yml ps -q redis)
 if [ -n "$REDIS_CONTAINER" ]; then
-    docker cp $REDIS_CONTAINER:/data/dump.rdb "$BACKUP_DIR/redis_$TIMESTAMP.rdb"
+    docker cp "$REDIS_CONTAINER":/data/dump.rdb "$BACKUP_DIR/redis_$TIMESTAMP.rdb"
     
     if [ $? -eq 0 ]; then
         echo "✅ Redis backup complete: $BACKUP_DIR/redis_$TIMESTAMP.rdb"
