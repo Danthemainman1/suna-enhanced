@@ -22,11 +22,13 @@ from .scheduler import Scheduler
 from .webhooks import WebhookManager
 from .suggestions import SuggestionEngine
 
-# Import router only when not testing to avoid dependency issues
+# Import router and worker only when not testing to avoid dependency issues
 try:
     from .api import router
+    from . import worker
 except ImportError:
     router = None
+    worker = None
 
 __all__ = [
     "Monitor",
@@ -46,4 +48,5 @@ __all__ = [
     "WebhookManager",
     "SuggestionEngine",
     "router",
+    "worker",
 ]

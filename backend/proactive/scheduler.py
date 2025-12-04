@@ -8,7 +8,7 @@ to run agents at specific times.
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
-from typing import List, Dict, Optional
+from typing import List, Dict
 from croniter import croniter
 import pytz
 from core.services import redis

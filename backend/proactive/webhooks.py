@@ -10,7 +10,6 @@ import hmac
 import hashlib
 from typing import List, Dict, Optional
 from datetime import datetime
-from typing import Optional
 from core.services import redis
 from core.utils.logger import logger
 from .models import Webhook, WebhookEvent

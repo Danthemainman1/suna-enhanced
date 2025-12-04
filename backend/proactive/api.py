@@ -8,7 +8,7 @@ webhooks, and suggestions.
 from fastapi import APIRouter, HTTPException, Depends, Request, Body
 from fastapi.responses import JSONResponse
 from typing import Optional
-from typing import List, Dict, Optional
+from typing import List, Dict
 from datetime import datetime
 
 from core.utils.auth_utils import verify_and_get_user_id_from_jwt

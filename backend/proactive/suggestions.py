@@ -8,7 +8,7 @@ suggestions based on historical behavior.
 import uuid
 from datetime import datetime
 from typing import Optional
-from typing import List, Dict, Optional
+from typing import List, Dict
 from core.services import redis
 from core.utils.logger import logger
 from .models import TaskSuggestion, PatternAnalysis
@@ -128,7 +128,7 @@ class SuggestionEngine:
                 },
                 {
                     "title": "Update project documentation",
-                    "description": "Documentation hasn\'t been updated in 2 weeks",
+                    "description": "Documentation hasn't been updated in 2 weeks",
                     "agent_id": "documentation-agent",
                     "confidence": 0.72,
                     "reason": "Regular documentation updates are overdue"

@@ -8,7 +8,7 @@ various event types (webhooks, schedules, email, Slack, GitHub, etc.).
 import uuid
 from datetime import datetime
 from typing import Optional
-from typing import List, Dict, Optional
+from typing import List, Dict
 from core.services import redis
 from core.utils.logger import logger
 from .models import Trigger, TriggerEvent, TriggerType

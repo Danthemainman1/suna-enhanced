@@ -9,7 +9,6 @@ import uuid
 import asyncio
 from datetime import datetime
 from typing import List, Dict, Optional
-from typing import Optional
 from core.services import redis
 from core.utils.logger import logger
 from .models import Monitor, MonitorEvent
@@ -205,7 +204,7 @@ class ProactiveMonitor:
         return await self._check_monitor(monitor)
     
     async def _check_monitor(self, monitor: Monitor) -> MonitorEvent:
-        """Check a monitor\'s condition and trigger if met.
+        """Check a monitor's condition and trigger if met.
         
         Args:
             monitor: Monitor to check
