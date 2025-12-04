@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: suna-ultra
+  labels:
+    name: suna-ultra
+    app: suna-ultra

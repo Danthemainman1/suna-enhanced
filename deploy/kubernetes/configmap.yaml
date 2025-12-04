@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: suna-config
+  namespace: suna-ultra
+data:
+  ENVIRONMENT: "production"
+  ENV_MODE: "production"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  REDIS_SSL: "False"
+  # Note: DATABASE_URL should be constructed from environment variables in the application
+  # or use the DB_PASSWORD from secrets. This is a template that applications should override.
+  POSTGRES_HOST: "postgres-service"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "suna_ultra"
+  POSTGRES_USER: "suna"
