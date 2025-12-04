@@ -110,6 +110,13 @@ async def lifespan(app: FastAPI):
         # Start memory watchdog for observability
         _memory_watchdog_task = asyncio.create_task(_memory_watchdog())
         
+        # Initialize scheduler
+        try:
+            await scheduler_api.initialize()
+            logger.debug("Scheduler initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize scheduler: {e}")
+        
         yield
         
         logger.debug("Cleaning up agent resources")
@@ -130,6 +137,14 @@ async def lifespan(app: FastAPI):
                 await _memory_watchdog_task
             except asyncio.CancelledError:
                 pass
+        
+        # Cleanup scheduler
+        try:
+            logger.debug("Cleaning up scheduler")
+            await scheduler_api.cleanup()
+            logger.debug("Scheduler cleaned up successfully")
+        except Exception as e:
+            logger.error(f"Error cleaning up scheduler: {e}")
         
         try:
             logger.debug("Closing Redis connection")
@@ -297,6 +312,10 @@ api_router.include_router(google_docs_router)
 
 from core.referrals import router as referrals_router
 api_router.include_router(referrals_router)
+
+# Include scheduler router
+from scheduler import api as scheduler_api
+api_router.include_router(scheduler_api.router)
 
 @api_router.get("/health", summary="Health Check", operation_id="health_check", tags=["system"])
 async def health_check():
