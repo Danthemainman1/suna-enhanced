@@ -116,6 +116,14 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.error(f"Failed to initialize scheduler: {e}")
         
+        # Initialize proactive worker
+        try:
+            from proactive import worker as proactive_worker
+            await proactive_worker.initialize()
+            logger.debug("Proactive worker initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize proactive worker: {e}")
+        
         yield
         
         logger.debug("Cleaning up agent resources")
@@ -144,6 +152,15 @@ async def lifespan(app: FastAPI):
             logger.debug("Scheduler cleaned up successfully")
         except Exception as e:
             logger.error(f"Error cleaning up scheduler: {e}")
+        
+        # Cleanup proactive worker
+        try:
+            logger.debug("Cleaning up proactive worker")
+            from proactive import worker as proactive_worker
+            await proactive_worker.cleanup()
+            logger.debug("Proactive worker cleaned up successfully")
+        except Exception as e:
+            logger.error(f"Error cleaning up proactive worker: {e}")
         
         try:
             logger.debug("Closing Redis connection")
@@ -316,6 +333,9 @@ api_router.include_router(referrals_router)
 from scheduler import api as scheduler_api
 api_router.include_router(scheduler_api.router)
 
+# Include proactive agent system router
+from proactive import api as proactive_api
+api_router.include_router(proactive_api.router)
 # Include debugger router
 from debugger import api as debugger_api
 api_router.include_router(debugger_api.router)
