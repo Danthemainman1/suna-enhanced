@@ -50,7 +50,6 @@ if sys.platform == "win32":
 db = DBConnection()
 # Generate unique instance ID per process/worker
 # This is critical for distributed locking - each worker needs a unique ID
-import uuid
 instance_id = str(uuid.uuid4())[:8]
 
 # Rate limiter state
