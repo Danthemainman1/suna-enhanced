@@ -60,10 +60,8 @@ export function DemoVideoSection() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
-              {/* TODO: Replace YOUR_VIDEO_ID with actual Suna Ultra demo video ID */}
             )}
 
-            {/* Placeholder background - Replace with actual demo screenshot */}
             {!isPlaying && (
               <div className="absolute inset-0 -z-10">
                 <div className="w-full h-full bg-gradient-to-br from-primary/20 via-primary/10 to-transparent flex items-center justify-center">
@@ -80,7 +78,6 @@ export function DemoVideoSection() {
             )}
           </div>
 
-          {/* Decorative elements */}
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
         </motion.div>
