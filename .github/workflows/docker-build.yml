@@ -22,6 +22,9 @@ jobs:
         with:
           ref: ${{ github.event_name == 'repository_dispatch' && 'PRODUCTION' || github.ref }}
 
+      - name: Set lowercase repo name
+        run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
       - name: Get tag name
         shell: bash
         run: |
@@ -63,7 +66,7 @@ jobs:
           file: ./backend/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ghcr.io/${{ github.repository }}/suna-backend:${{ steps.get_tag_name.outputs.branch }}
+          tags: ghcr.io/${{ env.REPO_LC }}/suna-backend:${{ steps.get_tag_name.outputs.branch }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
