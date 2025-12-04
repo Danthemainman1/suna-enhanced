@@ -4,8 +4,9 @@ Tests for API key management.
 
 import pytest
 from uuid import uuid4
-from enterprise.api_keys import APIKeyManager
+from unittest.mock import patch
 from datetime import datetime, timedelta
+from enterprise.api_keys import APIKeyManager
 
 
 def test_generate_key():
@@ -231,8 +232,6 @@ async def test_revoke_api_key(mock_db_connection):
 @pytest.mark.asyncio
 async def test_check_rate_limit(mock_redis):
     """Test rate limiting for API keys."""
-    from unittest.mock import patch
-    
     manager = APIKeyManager()
     key_id = uuid4()
     
@@ -247,8 +246,6 @@ async def test_check_rate_limit(mock_redis):
 @pytest.mark.asyncio
 async def test_rate_limit_exceeded(mock_redis):
     """Test when rate limit is exceeded."""
-    from unittest.mock import patch
-    
     manager = APIKeyManager()
     key_id = uuid4()
     

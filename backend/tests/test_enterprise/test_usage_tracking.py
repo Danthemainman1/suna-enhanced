@@ -4,6 +4,7 @@ Tests for usage tracking system.
 
 import pytest
 from uuid import uuid4
+from unittest.mock import MagicMock
 from datetime import datetime, timedelta
 from enterprise.usage_tracking import UsageTracker
 
@@ -66,7 +67,6 @@ async def test_get_usage(mock_db_connection):
     # We need to set up different responses for different queries
     call_count = [0]
     def side_effect():
-        from unittest.mock import MagicMock
         result = MagicMock()
         call_count[0] += 1
         if call_count[0] == 1:
@@ -104,7 +104,6 @@ async def test_get_current_month(mock_db_connection):
     # Mock responses
     call_count = [0]
     def side_effect():
-        from unittest.mock import MagicMock
         result = MagicMock()
         call_count[0] += 1
         if call_count[0] == 1:
@@ -138,7 +137,6 @@ async def test_get_daily_usage(mock_db_connection):
     # Mock responses
     call_count = [0]
     def side_effect():
-        from unittest.mock import MagicMock
         result = MagicMock()
         call_count[0] += 1
         if call_count[0] == 1:
@@ -206,7 +204,6 @@ async def test_zero_usage(mock_db_connection):
     # Mock empty responses
     call_count = [0]
     def side_effect():
-        from unittest.mock import MagicMock
         result = MagicMock()
         call_count[0] += 1
         result.count = 0

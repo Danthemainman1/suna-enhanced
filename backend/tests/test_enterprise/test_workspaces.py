@@ -4,6 +4,7 @@ Tests for workspace management.
 
 import pytest
 from uuid import uuid4
+from unittest.mock import MagicMock
 from enterprise.workspaces import WorkspaceManager, slugify
 from enterprise.models import WorkspaceUpdate
 
@@ -218,7 +219,6 @@ async def test_list_user_workspaces(mock_db_connection):
             result.data = workspaces_data
             return result
     
-    from unittest.mock import MagicMock
     mock_db_connection.client.table().execute.side_effect = side_effect
     
     workspaces = await manager.list_user_workspaces(user_id)
