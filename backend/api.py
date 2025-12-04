@@ -317,6 +317,14 @@ api_router.include_router(referrals_router)
 from scheduler import api as scheduler_api
 api_router.include_router(scheduler_api.router)
 
+# Include debugger router
+from debugger import api as debugger_api
+api_router.include_router(debugger_api.router)
+
+# Include collaboration router
+from multi_agent import collaboration_api
+api_router.include_router(collaboration_api.router)
+
 @api_router.get("/health", summary="Health Check", operation_id="health_check", tags=["system"])
 async def health_check():
     logger.debug("Health check endpoint called")
