@@ -56,10 +56,12 @@ class VisionProcessor:
         # Build prompt
         prompt = self._build_description_prompt(detailed)
         
-        # For now, use text-based description
-        # In production, this would use vision-capable models
+        # NOTE: Placeholder implementation
+        # Production should use vision-capable models like:
+        # - GPT-4 Vision, Claude 3 Vision, or Gemini Vision APIs
+        # - For now, returns placeholder description
         response = await self.llm_provider.generate(
-            prompt=f"{prompt}\n\n[Note: Image analysis would use vision model in production]",
+            prompt=f"{prompt}\n\n[PLACEHOLDER: Image analysis requires vision-capable LLM integration]",
             temperature=0.5,
             max_tokens=500
         )

@@ -27,6 +27,10 @@ class BackgroundExecutor:
     with retry logic, exponential backoff, and status tracking.
     """
     
+    # Exponential backoff configuration
+    MAX_RETRY_DELAY_SECONDS = 300  # 5 minutes max delay
+    BASE_RETRY_DELAY_SECONDS = 10  # Base delay for retry calculation
+    
     def __init__(self, num_workers: int = 4, max_queue_size: int = 1000):
         """
         Initialize the background executor.
@@ -429,7 +433,10 @@ class BackgroundExecutor:
         # Check if we should retry
         if task.retry_count < task.max_retries:
             # Exponential backoff
-            delay = min(300, 2 ** task.retry_count * 10)  # Max 5 minutes
+            delay = min(
+                self.MAX_RETRY_DELAY_SECONDS,
+                2 ** task.retry_count * self.BASE_RETRY_DELAY_SECONDS
+            )
             await asyncio.sleep(delay)
             
             # Re-queue the task

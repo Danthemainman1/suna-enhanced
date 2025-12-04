@@ -266,7 +266,7 @@ Provide only a number between 0.0 and 1.0.
                 continue
             
             # Remove numbering if present
-            if line[0].isdigit() and '.' in line:
+            if line and line[0].isdigit() and '.' in line:
                 thought = line.split('.', 1)[1].strip()
             else:
                 thought = line

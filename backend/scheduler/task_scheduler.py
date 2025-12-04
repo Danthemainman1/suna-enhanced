@@ -270,6 +270,8 @@ class TaskScheduler:
     ) -> datetime:
         """Calculate the next run time from a cron expression."""
         try:
+            # Note: Timezone handling for cron is basic here
+            # For production, consider using pytz or zoneinfo for proper timezone support
             cron = croniter(cron_expression, datetime.utcnow())
             return cron.get_next(datetime)
         except Exception as e:

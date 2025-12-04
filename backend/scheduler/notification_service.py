@@ -118,7 +118,9 @@ class NotificationService:
                     response.raise_for_status()
         
         except Exception as e:
-            print(f"Error sending webhook notification: {e}")
+            # TODO: Use proper logging framework
+            import logging
+            logging.error(f"Error sending webhook notification: {e}")
     
     async def _send_email(self, event: TaskEvent, config: EmailConfig):
         """Send email notification."""
@@ -153,7 +155,8 @@ class NotificationService:
             )
         
         except Exception as e:
-            print(f"Error sending email notification: {e}")
+            import logging
+            logging.error(f"Error sending email notification: {e}")
     
     def _send_smtp_email(self, smtp_config, msg):
         """Send email via SMTP (blocking, run in executor)."""
@@ -215,7 +218,8 @@ class NotificationService:
                     response.raise_for_status()
         
         except Exception as e:
-            print(f"Error sending Slack notification: {e}")
+            import logging
+            logging.error(f"Error sending Slack notification: {e}")
     
     async def _send_discord(self, event: TaskEvent, config: DiscordConfig):
         """Send Discord notification."""
@@ -262,7 +266,8 @@ class NotificationService:
                     response.raise_for_status()
         
         except Exception as e:
-            print(f"Error sending Discord notification: {e}")
+            import logging
+            logging.error(f"Error sending Discord notification: {e}")
     
     def _get_event_color(self, event_type: str) -> str:
         """Get color for event type (Slack format)."""

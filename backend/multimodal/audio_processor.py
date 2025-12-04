@@ -42,13 +42,13 @@ class AudioProcessor:
         Returns:
             Transcription with text and metadata
         """
-        # In production, this would use a speech-to-text API like:
-        # - OpenAI Whisper API
+        # PLACEHOLDER IMPLEMENTATION
+        # Production integration requires speech-to-text API like:
+        # - OpenAI Whisper API (https://platform.openai.com/docs/guides/speech-to-text)
         # - Google Speech-to-Text
         # - Assembly AI
         # - Deepgram
-        
-        # For now, return a placeholder transcription
+        # 
         # Real implementation would:
         # 1. Send audio to transcription service
         # 2. Get back timestamped text
