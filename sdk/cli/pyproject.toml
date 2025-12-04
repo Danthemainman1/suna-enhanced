@@ -1,0 +1,53 @@
+[project]
+name = "suna-cli"
+version = "0.1.0"
+description = "Command-line interface for Suna Ultra AI Agent Platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Suna Team", email = "support@suna.so"}
+]
+keywords = ["ai", "agents", "suna", "cli", "automation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "click>=8.0",
+    "rich>=13.0",
+    "suna-ultra>=0.1.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+
+[project.scripts]
+suna = "suna_cli.main:cli"
+
+[project.urls]
+Homepage = "https://suna.so"
+Documentation = "https://docs.suna.so"
+Repository = "https://github.com/kortix-ai/suna"
+Issues = "https://github.com/kortix-ai/suna/issues"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["suna_cli"]
+omit = ["*/tests/*"]
