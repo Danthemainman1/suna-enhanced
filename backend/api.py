@@ -317,6 +317,10 @@ api_router.include_router(referrals_router)
 from scheduler import api as scheduler_api
 api_router.include_router(scheduler_api.router)
 
+# Include proactive agent system router
+from proactive import api as proactive_api
+api_router.include_router(proactive_api.router)
+
 @api_router.get("/health", summary="Health Check", operation_id="health_check", tags=["system"])
 async def health_check():
     logger.debug("Health check endpoint called")
