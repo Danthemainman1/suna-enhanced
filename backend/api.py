@@ -42,6 +42,11 @@ import sys
 from core.triggers import api as triggers_api
 from core.services import api_keys_api
 from core.notifications import api as notifications_api
+from core.mcp_module import api as mcp_api
+from core.credentials import api as credentials_api
+from core.templates import api as template_api
+from core.composio_integration import api as composio_api
+from scheduler import api as scheduler_api
 
 
 if sys.platform == "win32":
@@ -295,9 +300,6 @@ api_router.include_router(billing_admin_router)
 api_router.include_router(admin_router)
 api_router.include_router(notification_admin_router)
 
-from core.mcp_module import api as mcp_api
-from core.credentials import api as credentials_api
-from core.templates import api as template_api
 from core.templates import presentations_api
 
 api_router.include_router(mcp_api.router)
@@ -317,7 +319,6 @@ api_router.include_router(notifications_api.router)
 from core.notifications import presence_api
 api_router.include_router(presence_api.router)
 
-from core.composio_integration import api as composio_api
 api_router.include_router(composio_api.router)
 
 from core.google.google_slides_api import router as google_slides_router
@@ -330,7 +331,6 @@ from core.referrals import router as referrals_router
 api_router.include_router(referrals_router)
 
 # Include scheduler router
-from scheduler import api as scheduler_api
 api_router.include_router(scheduler_api.router)
 
 # Include enterprise router
