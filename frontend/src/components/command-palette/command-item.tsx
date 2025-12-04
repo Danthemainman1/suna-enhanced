@@ -1,4 +1,4 @@
-use client;
+"use client";
 
 import { Command as CommandPrimitive } from "cmdk";
 import * as LucideIcons from "lucide-react";
